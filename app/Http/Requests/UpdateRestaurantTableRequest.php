@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class UpdateRestaurantTableRequest extends FormRequest
@@ -21,7 +22,7 @@ class UpdateRestaurantTableRequest extends FormRequest
                 'string',
                 'max:255', 
                 Rule::unique('restaurant_tables', 'label')
-                    ->where('business_id', auth()->user()->business_id)
+                ->where('business_id', Auth::user()->business_id)
                     ->ignore($this->route('restaurant_table')),
             ],
         ];

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -19,7 +20,7 @@ class UserController extends Controller
         $validated = $request->validated();
 
         $user = new User($validated);
-        $user->business_id = auth()->user()->business_id;
+        $user->business_id = Auth::user()->business_id;
         $user->role = 'waiter';
         $user->is_active = true;
         $user->save();
