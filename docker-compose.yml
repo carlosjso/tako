@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: tako_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: tako
+      POSTGRES_USER: tako_user
+      POSTGRES_PASSWORD: tako_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - tako_pgdata:/var/lib/postgresql/data
+
+volumes:
+  tako_pgdata:
