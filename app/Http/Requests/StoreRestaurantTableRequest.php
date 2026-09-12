@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class StoreRestaurantTableRequest extends FormRequest
@@ -20,7 +21,7 @@ class StoreRestaurantTableRequest extends FormRequest
                 'required',
                 'string',
                 'max:255', 
-                Rule::unique('restaurant_tables', 'label')->where('business_id', auth()->user()->business_id),
+                Rule::unique('restaurant_tables', 'label')->where('business_id', Auth::user()->business_id),
             ],
         ];
     }
