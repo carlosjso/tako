@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreRestaurantTableRequest;
 use App\Http\Requests\UpdateRestaurantTableRequest;
 use App\Models\RestaurantTable;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class RestaurantTableController extends Controller
@@ -17,7 +18,7 @@ class RestaurantTableController extends Controller
     public function store(StoreRestaurantTableRequest $request)
     {
         $table = new RestaurantTable($request->validated());
-        $table->business_id = auth()->user()->business_id;
+        $table->business_id = Auth::user()->business_id;
         $table->save();
 
         return response()->json($table, 201);

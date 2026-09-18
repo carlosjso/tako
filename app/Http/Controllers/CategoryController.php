@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use Illuminate\Http\Request;
@@ -17,7 +18,7 @@ class CategoryController extends Controller
     public function store(StoreCategoryRequest $request)
     {
         $category = new Category($request->validated());
-        $category->business_id = auth()->user()->business_id;
+        $category->business_id = Auth::user()->business_id;
         $category->save();
 
         return response()->json($category, 201);

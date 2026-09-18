@@ -19,11 +19,10 @@ return new class extends Migration
             $table->bigInteger('unit_price_at_sale');
             $table->bigInteger('unit_cost_at_sale');
             $table->string('modifiers')->nullable();
-            $table->enum('status', ['pending', 'ready', 'paid', 'cancelled']);
+            $table->enum('status', ['pending', 'ready', 'paid', 'cancelled'])->default('pending');
             $table->string('cancel_reason')->nullable();
             $table->timestamp('closed_at')->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

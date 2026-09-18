@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class StoreProductRequest extends FormRequest
@@ -18,7 +19,7 @@ class StoreProductRequest extends FormRequest
         return [
             'category_id' => [
                 'required',
-                Rule::exists('categories', 'id')->where('business_id', auth()->user()->business_id),
+                Rule::exists('categories', 'id')->where('business_id', Auth::user()->business_id),
             ],
             'name' => 'required|string|max:255',
             'image_url' => 'nullable|string',

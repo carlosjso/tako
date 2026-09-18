@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
-use App\Models\Category;
 use App\Models\Product;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -18,7 +17,7 @@ class ProductController extends Controller
     public function store(StoreProductRequest $request)
     {
         $product = new Product($request->validated());
-        $product->business_id = auth()->user()->business_id;
+        $product->business_id = Auth::user()->business_id;
         $product->save();
 
         return response()->json($product, 201);

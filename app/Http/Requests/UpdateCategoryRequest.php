@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class UpdateCategoryRequest extends FormRequest
@@ -21,7 +22,7 @@ class UpdateCategoryRequest extends FormRequest
             'string',
             'max:255',
             Rule::unique('categories', 'name')
-                ->where('business_id', auth()->user()->business_id)
+                ->where('business_id', Auth::user()->business_id)
                 ->ignore($this->route('category'))
         ],
             'display_order' => 'sometimes|integer',

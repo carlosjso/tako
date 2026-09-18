@@ -4,10 +4,9 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
-class UpdateRestaurantTableRequest extends FormRequest
+class UpdateOrderItemRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -17,14 +16,14 @@ class UpdateRestaurantTableRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'label' => [
+            'product_id' => [
                 'sometimes',
-                'string',
-                'max:255', 
-                Rule::unique('restaurant_tables', 'label')
-                ->where('business_id', Auth::user()->business_id)
-                    ->ignore($this->route('restaurant_table')),
+                'uuid',
+                Rule::exists('products', 'id')->where('business_id', $this->user()->business_id),
             ],
+            'quantity' => 'sometimes|ingeter',
+            'modifiers' => 'sometimes|string|max:255',
+            'canel_reason' => 'sometimes|string|max:255',
         ];
     }
 }
