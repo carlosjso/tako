@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\BelongsToCurrentBusiness;
+use App\Models\Concerns\BelongsToCurrentUser;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 
 class WorkShift extends Model
 {
-    use HasUuids;
+    use HasUuids, BelongsToCurrentBusiness, BelongsToCurrentUser;
 
     protected $fillable = [
         'clock_in',
