@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Actions\CancelOrderAction;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Models\Order;
@@ -48,24 +49,9 @@ class OrderController extends Controller
         return $order;
     }
 
-    public function cancelOrder(string $id)
+    public function cancelOrder(string $id, CancelOrderAction $action)
     {
-        $order = Order::forCurrentBusiness()->findOrFail($id);
-
-        if (in_array($order->status, ['paid', 'cancelled'])) {
-            return response()->json(['message' => 'No se puede cancelar esta orden.'], 409);
-        }
-
-        $order->status = 'cancelled';
-        $order->closed_at = Carbon::now();
-        $order->save();
-
-        $order->orderItems()
-            ->whereNotIn('status', ['paid', 'cancelled'])
-            ->update([
-                'status' => 'cancelled',
-                'closed_at' => Carbon::now(),
-            ]);
+        $order = $action->execute($id);
 
         return $order;
     }

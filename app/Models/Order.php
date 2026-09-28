@@ -28,6 +28,17 @@ class Order extends Model
         });
     }
 
+    public function markAsPaid(): void
+    {
+        $this->orderItems()
+            ->where('status', '!=', 'cancelled')
+            ->update(['status' => 'paid', 'closed_at' => now()]);
+
+        $this->status = 'paid';
+        $this->closed_at = now();
+        $this->save();
+    }
+
     public function business()
     {
         return $this->belongsTo(Business::class);

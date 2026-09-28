@@ -25,7 +25,6 @@ class StoreProductRequest extends FormRequest
             'image_url' => 'nullable|string',
             'sale_price' => 'required|integer',
             'production_cost' => 'required|integer',
-            'current_stock' => 'required|integer',
             'is_available' => 'required|boolean',
             'track_inventory' => 'required|boolean',
         ];

@@ -25,7 +25,6 @@ class UpdateProductRequest extends FormRequest
             'image_url' => 'sometimes|string',
             'sale_price' => 'sometimes|integer',
             'production_cost' => 'sometimes|integer',
-            'current_stock' => 'sometimes|integer',
             'is_available' => 'sometimes|boolean',
             'track_inventory' => 'sometimes|boolean',
         ];

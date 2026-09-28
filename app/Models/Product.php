@@ -17,7 +17,6 @@ class Product extends Model
         'image_url',
         'sale_price',
         'production_cost',
-        'current_stock',
         'is_available',
         'track_inventory',
     ];

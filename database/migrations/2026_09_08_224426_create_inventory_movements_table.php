@@ -13,10 +13,13 @@ return new class extends Migration
     {
         Schema::create('inventory_movements', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->foreignUuid('business_id')->constrained('businesses')->restrictOnDelete();
+            $table->foreignUuid('user_id')->constrained('users')->restrictOnDelete();
             $table->foreignUuid('product_id')->constrained('products')->restrictOnDelete();
             $table->foreignUuid('order_item_id')->nullable()->constrained('order_items')->restrictOnDelete();
             $table->integer('quantity_change');
-            $table->enum('reason', ['sale', 'manual', 'purchase', 'waste']);
+            $table->enum('reason', ['sale', 'manual', 'purchase', 'waste', 'cancellation']);
+            $table->string('note')->nullable();
             $table->timestamps();
         });
     }
