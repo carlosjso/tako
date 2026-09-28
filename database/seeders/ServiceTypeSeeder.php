@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\ServiceType;
+use App\Domain\ServiceTypes\Models\ServiceType;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Foundation\Console\ServeCommand;
