@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\AddOrderItemAction;
+use App\Actions\CancelOrderItemAction;
 use App\Http\Requests\CancelOrderItemRequest;
 use App\Http\Requests\StoreOrderItemRequest;
 use App\Http\Requests\UpdateOrderItemRequest;
@@ -20,16 +22,9 @@ class OrderItemController extends Controller
         return $order->orderItems;
     }
 
-    public function store(StoreOrderItemRequest $request, string $orderId)
+    public function store(StoreOrderItemRequest $request, string $orderId, AddOrderItemAction $action)
     {
-        $order = Order::forCurrentBusiness()->findOrFail($orderId);
-        $product = Product::findOrFail($request->validated('product_id'));
-
-        $item = new OrderItem($request->validated());
-        $item->order_id = $order->id;
-        $item->unit_price_at_sale = $product->sale_price;
-        $item->unit_cost_at_sale = $product->production_cost;
-        $item->save();
+        $item = $action->execute($orderId, $request->validated());
 
         return response()->json($item, 201);
     }
@@ -51,19 +46,9 @@ class OrderItemController extends Controller
         return $item;
     }
 
-    public function cancelItemOrder(CancelOrderItemRequest $request, string $orderId, string $id)
+    public function cancelItemOrder(CancelOrderItemRequest $request, string $orderId, string $id, CancelOrderItemAction $action)
     {
-        $order = Order::forCurrentBusiness()->findOrFail($orderId);
-        $item = $order->orderItems()->findOrFail($id);
-
-        if (in_array($item->status, ['paid', 'cancelled'])) {
-            return response()->json(['message' => 'No se puede cancelar esta orden.'], 409);
-        }
-
-        $item->update($request->validated());
-        $item->status = 'cancelled';
-        $item->closed_at = Carbon::now();
-        $item->save();
+        $item = $action->execute($orderId, $id, $request->validated());
 
         return $item;
     }

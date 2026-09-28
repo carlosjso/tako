@@ -39,6 +39,11 @@ class User extends Authenticatable
         return $this->belongsTo(Business::class);
     }
 
+    public function InventoryMovements()
+    {
+        return $this->hasMany(InventoryMovement::class);
+    }
+
     public function workShifts()
     {
         return $this->hasMany(WorkShift::class);

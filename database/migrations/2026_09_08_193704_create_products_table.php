@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('image_url')->nullable();
             $table->bigInteger('sale_price');
             $table->bigInteger('production_cost');
-            $table->integer('current_stock');
+            $table->integer('current_stock')-> default(0);
             $table->boolean('is_available')->default(true);
             $table->boolean('track_inventory')->default(true);
             $table->timestamps();

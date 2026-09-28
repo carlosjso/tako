@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->foreignUuid('business_id')->constrained('businesses')->restrictOnDelete();
             $table->foreignUuid('cash_register_session_id')->constrained('cash_register_sessions')->restrictOnDelete();
             $table->foreignUuid('order_id')->constrained('orders')->restrictOnDelete();
             $table->enum('method', ['cash', 'card', 'transfer']);
